@@ -29,7 +29,6 @@ int main(int argc, char **argv) {
 
   for (int i = optind; i < argc; i++) {
     read_arg(argv[i], &flags, &line_number);
-    printf("yyy");
   }
 
   return 0;

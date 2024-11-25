@@ -39,7 +39,7 @@ fi
 echo "---------------------------------------------------"
 # Тест 3 с флагом --number-nonblank
 total_tests=$((total_tests + 1))
-cat --number-nonblank $BUILD$FILE1 > $BUILD"cat5.txt"
+cat -b $BUILD$FILE1 > $BUILD"cat5.txt"
 $PROG --number-nonblank $BUILD$FILE1 > $BUILD"cat6.txt"
 diff $BUILD"cat5.txt" $BUILD"cat6.txt"
 if [ $? -eq 0 ]; then
@@ -65,8 +65,8 @@ fi
 echo "---------------------------------------------------"
 # Тест 5 с флагом -E
 total_tests=$((total_tests + 1))
-cat -E $BUILD$FILE1 > $BUILD"cat9.txt"
-$PROG -E $BUILD$FILE1 > $BUILD"cat10.txt"
+cat -e $BUILD$FILE1 > $BUILD"cat9.txt"
+$PROG -Ev $BUILD$FILE1 > $BUILD"cat10.txt"
 diff $BUILD"cat9.txt" $BUILD"cat10.txt"
 if [ $? -eq 0 ]; then
   succes_tests=$((succes_tests + 1))
@@ -91,8 +91,8 @@ fi
 echo "---------------------------------------------------"
 # Тест 7 с флагом --number
 total_tests=$((total_tests + 1))
-$PROG --number $BUILD$FILE1 > $BUILD"cat13.txt"
-cat --number $BUILD$FILE1 > $BUILD"cat14.txt"
+cat -n $BUILD$FILE1 > $BUILD"cat13.txt"
+$PROG --number $BUILD$FILE1 > $BUILD"cat14.txt"
 diff $BUILD"cat13.txt" $BUILD"cat14.txt"
 if [ $? -eq 0 ]; then
   succes_tests=$((succes_tests + 1))
@@ -104,8 +104,8 @@ fi
 echo "---------------------------------------------------"
 # Тест 8 с флагом -s
 total_tests=$((total_tests + 1))
-cat --squeeze-blank $BUILD$FILE1 > $BUILD"cat15.txt"
-$PROG --squeeze-blank $BUILD$FILE1 > $BUILD"cat16.txt"
+cat -s $BUILD$FILE1 > $BUILD"cat15.txt"
+$PROG -s $BUILD$FILE1 > $BUILD"cat16.txt"
 diff $BUILD"cat15.txt" $BUILD"cat16.txt"
 if [ $? -eq 0 ]; then
   succes_tests=$((succes_tests + 1))
@@ -117,8 +117,8 @@ fi
 echo "---------------------------------------------------"
 # Тест 9 с флагом --squeeze-blank
 total_tests=$((total_tests + 1))
-$PROG --squeeze-blank $BUILD$FILE1 > $BUILD"cat17.txt"
-cat -s $BUILD$FILE1 > $BUILD"cat18.txt"
+cat -s $BUILD$FILE1 > $BUILD"cat17.txt"
+$PROG --squeeze-blank $BUILD$FILE1 > $BUILD"cat18.txt"
 diff $BUILD"cat17.txt" $BUILD"cat18.txt"
 if [ $? -eq 0 ]; then
   succes_tests=$((succes_tests + 1))
@@ -143,8 +143,8 @@ fi
 echo "---------------------------------------------------"
 # Тест 11 с флагом -T
 total_tests=$((total_tests + 1))
-cat -T $BUILD$FILE1 > $BUILD"cat21.txt"
-$PROG -T $BUILD$FILE1 > $BUILD"cat22.txt"
+cat -t $BUILD$FILE1 > $BUILD"cat21.txt"
+$PROG -Tv $BUILD$FILE1 > $BUILD"cat22.txt"
 diff $BUILD"cat21.txt" $BUILD"cat22.txt"
 if [ $? -eq 0 ]; then
   succes_tests=$((succes_tests + 1))
@@ -182,7 +182,7 @@ fi
 echo "---------------------------------------------------"
 # Тест 14 с флагом --number-nonblank c двумя файлами
 total_tests=$((total_tests + 1))
-cat --number-nonblank $BUILD$FILE1 $BUILD$FILE2 > $BUILD"cat27.txt"
+cat -b $BUILD$FILE1 $BUILD$FILE2 > $BUILD"cat27.txt"
 $PROG  --number-nonblank $BUILD$FILE1 $BUILD$FILE2 > $BUILD"cat28.txt"
 diff $BUILD"cat27.txt" $BUILD"cat28.txt"
 if [ $? -eq 0 ]; then
