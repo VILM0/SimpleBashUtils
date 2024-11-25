@@ -20,8 +20,8 @@ void out_file(FILE *fp, Flags *flags);
 
 int main(int argc, char **argv) {
   Flags flags = {0};
-  flags.new_line = 1;
-  flags.line_number = 0;
+  // flags.new_line = 1;
+  // flags.line_number = 0;
 
   if (argc == 1) {
     fprintf(stderr, "Usage: %s [-bns] [-e|-t|-v|-E|-T] [files...]\n", argv[0]);
@@ -31,6 +31,8 @@ int main(int argc, char **argv) {
   pars_flag(argc, argv, &flags);
 
   for (int i = optind; i < argc; i++) {
+    flags.new_line = 1;
+    flags.line_number = 0;
     read_arg(argv[i], &flags);
   }
 
