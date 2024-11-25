@@ -10,15 +10,18 @@ typedef struct {
   int v;
   int e;
   int t;
+  int new_line;
+  int line_number;
 } Flags;
 
 void pars_flag(int argc, char **argv, Flags *flags);
-void read_arg(const char *filename, const Flags *flags, int* line_number);
-void out_file(FILE *fp, const Flags *flags, int* line_number);
+void read_arg(const char *filename, Flags *flags);
+void out_file(FILE *fp, Flags *flags);
 
 int main(int argc, char **argv) {
   Flags flags = {0};
-  int line_number = 0;  // Номер строки
+  flags.new_line = 1;
+  flags.line_number = 0;
 
   if (argc == 1) {
     fprintf(stderr, "Usage: %s [-bns] [-e|-t|-v|-E|-T] [files...]\n", argv[0]);
@@ -28,7 +31,7 @@ int main(int argc, char **argv) {
   pars_flag(argc, argv, &flags);
 
   for (int i = optind; i < argc; i++) {
-    read_arg(argv[i], &flags, &line_number);
+    read_arg(argv[i], &flags);
   }
 
   return 0;
@@ -41,7 +44,7 @@ void pars_flag(int argc, char **argv, Flags *flags) {
                                   {0, 0, 0, 0}};
 
   int opt;
-  while ((opt = getopt_long(argc, argv, "bnsetvET", long_options, NULL)) !=
+  while ((opt = getopt_long(argc, argv, "bnsetET", long_options, NULL)) !=
          -1) {
     switch (opt) {
       case 'b':
@@ -78,20 +81,20 @@ void pars_flag(int argc, char **argv, Flags *flags) {
   }
 }
 
-void read_arg(const char *filename, const Flags *flags, int* line_number) {
+void read_arg(const char *filename, Flags *flags) {
   FILE *file = fopen(filename, "r");
   if (!file) {
     fprintf(stderr, "Error: Cannot open file \"%s\"\n", filename);
     return;
   }
 
-  out_file(file, flags, line_number);
+  out_file(file, flags);
 
   fclose(file);
 }
 
-void out_file(FILE *fp, const Flags *flags, int *line_number) {
-  int new_line = 1;     // Флаг новой строки
+void out_file(FILE *fp, Flags *flags) {
+  // int new_line = 1;     // Флаг новой строки
   char pr_ch = 0;       // Предыдущий символ
   char ch;              // Текущий символ
 
@@ -104,14 +107,14 @@ void out_file(FILE *fp, const Flags *flags, int *line_number) {
       pr_ch = ch;
     }
 
-    if (flags->b && new_line && ch != '\n') {
-      printf("%6d\t", ++(*line_number));
-      new_line = 0;
+    if (flags->b && flags->new_line && ch != '\n') {
+      printf("%6d\t", ++(flags->line_number));
+      flags->new_line = 0;
     }
 
-    if (flags->n && new_line) {
-      printf("%6d\t", ++(*line_number));
-      new_line = 0;
+    if (flags->n && flags->new_line) {
+      printf("%6d\t", ++(flags->line_number));
+      flags->new_line = 0;
     }
 
     if (flags->e && ch == '\n') {
@@ -136,7 +139,7 @@ void out_file(FILE *fp, const Flags *flags, int *line_number) {
     putchar(ch);
 
     if (ch == '\n') {
-      new_line = 1;
+      flags->new_line = 1;
     }
   }
 }
