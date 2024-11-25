@@ -13,11 +13,12 @@ typedef struct {
 } Flags;
 
 void pars_flag(int argc, char **argv, Flags *flags);
-void read_arg(const char *filename, const Flags *flags);
-void out_file(FILE *fp, const Flags *flags);
+void read_arg(const char *filename, const Flags *flags, int* line_number);
+void out_file(FILE *fp, const Flags *flags, int* line_number);
 
 int main(int argc, char **argv) {
   Flags flags = {0};
+  int line_number = 0;  // Номер строки
 
   if (argc == 1) {
     fprintf(stderr, "Usage: %s [-bns] [-e|-t|-v|-E|-T] [files...]\n", argv[0]);
@@ -27,7 +28,8 @@ int main(int argc, char **argv) {
   pars_flag(argc, argv, &flags);
 
   for (int i = optind; i < argc; i++) {
-    read_arg(argv[i], &flags);
+    read_arg(argv[i], &flags, &line_number);
+    printf("yyy");
   }
 
   return 0;
@@ -77,20 +79,19 @@ void pars_flag(int argc, char **argv, Flags *flags) {
   }
 }
 
-void read_arg(const char *filename, const Flags *flags) {
+void read_arg(const char *filename, const Flags *flags, int* line_number) {
   FILE *file = fopen(filename, "r");
   if (!file) {
     fprintf(stderr, "Error: Cannot open file \"%s\"\n", filename);
     return;
   }
 
-  out_file(file, flags);
+  out_file(file, flags, line_number);
 
   fclose(file);
 }
 
-void out_file(FILE *fp, const Flags *flags) {
-  int line_number = 0;  // Номер строки
+void out_file(FILE *fp, const Flags *flags, int *line_number) {
   int new_line = 1;     // Флаг новой строки
   char pr_ch = 0;       // Предыдущий символ
   char ch;              // Текущий символ
@@ -105,12 +106,12 @@ void out_file(FILE *fp, const Flags *flags) {
     }
 
     if (flags->b && new_line && ch != '\n') {
-      printf("%6d\t", ++line_number);
+      printf("%6d\t", ++(*line_number));
       new_line = 0;
     }
 
     if (flags->n && new_line) {
-      printf("%6d\t", ++line_number);
+      printf("%6d\t", ++(*line_number));
       new_line = 0;
     }
 
