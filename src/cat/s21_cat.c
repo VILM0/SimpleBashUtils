@@ -129,6 +129,10 @@ void out_file(FILE *fp, Flags *flags) {
     }
 
     if (flags->v) {
+      if (ch < 0) {
+        printf("M-");
+        ch = ch & 0x7F;
+      }
       if (ch < 32 && ch != '\n' && ch != '\t') {
         printf("^%c", ch + 64);
         continue;
