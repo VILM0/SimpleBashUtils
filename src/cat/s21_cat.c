@@ -46,7 +46,7 @@ void pars_flag(int argc, char **argv, Flags *flags) {
                                   {0, 0, 0, 0}};
 
   int opt;
-  while ((opt = getopt_long(argc, argv, "bnsetET", long_options, NULL)) !=
+  while ((opt = getopt_long(argc, argv, "bnsetvET", long_options, NULL)) !=
          -1) {
     switch (opt) {
       case 'b':
@@ -68,6 +68,9 @@ void pars_flag(int argc, char **argv, Flags *flags) {
       case 't':
         flags->v = 1;
         flags->t = 1;
+        break;
+      case 'v':
+        flags->v = 1;
         break;
       case 'E':
         flags->e = 1;
@@ -96,9 +99,8 @@ void read_arg(const char *filename, Flags *flags) {
 }
 
 void out_file(FILE *fp, Flags *flags) {
-  // int new_line = 1;     // Флаг новой строки
-  char pr_ch = 0;       // Предыдущий символ
-  char ch;              // Текущий символ
+  char pr_ch = 0;  // Предыдущий символ
+  char ch;         // Текущий символ
 
   while ((ch = fgetc(fp)) != EOF) {
     if (flags->s) {

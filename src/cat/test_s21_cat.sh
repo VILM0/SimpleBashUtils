@@ -66,11 +66,23 @@ run_test 9 "cat -e $BUILD$FILE1 $BUILD$FILE2" "$PROG -e $BUILD$FILE1 $BUILD$FILE
 # Тест 10 два файла с флагом -n
 run_test 10 "cat -n $BUILD$FILE1 $BUILD$FILE2" "$PROG --number $BUILD$FILE1 $BUILD$FILE2"
 
-# Тест 11 два файла с флагом -e
-run_test 11 "cat -e $BUILD$FILE1 $BUILD$FILE2" "$PROG -e $BUILD$FILE1 $BUILD$FILE2"
+# Тест 11 два файла с флагом -s
+run_test 11 "cat -s $BUILD$FILE1 $BUILD$FILE2" "$PROG -s $BUILD$FILE1 $BUILD$FILE2"
 
 # Тест 12 два файла с флагом -t
 run_test 12 "cat -t $BUILD$FILE1 $BUILD$FILE2" "$PROG -t $BUILD$FILE1 $BUILD$FILE2"
+
+# Тест 13 с флагом -E
+run_test 13 "cat -e $BUILD$FILE1" "$PROG -Ev $BUILD$FILE1"
+
+# Тест 14 с флагом -T
+run_test 14 "cat -t $BUILD$FILE1" "$PROG -Tv $BUILD$FILE1"
+
+# Тест 15 два файла с флагом -s
+run_test 15 "cat -e $BUILD$FILE1 $BUILD$FILE2" "$PROG -Ev $BUILD$FILE1 $BUILD$FILE2"
+
+# Тест 16 два файла с флагом -t
+run_test 16 "cat -t $BUILD$FILE1 $BUILD$FILE2" "$PROG -Tv $BUILD$FILE1 $BUILD$FILE2"
 
 # Вывод результатов
 echo "Total tests: $total_tests"
