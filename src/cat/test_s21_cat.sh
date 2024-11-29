@@ -2,8 +2,8 @@
 
 PROG=./s21_cat
 BUILD=./test/
-FILE1=r.txt
-FILE2=q.txt
+FILE1=file1.txt
+FILE2=file2.txt
 filename="cat"
 extension="txt"
 
