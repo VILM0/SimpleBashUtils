@@ -22,8 +22,8 @@ run_test() {
     local result_file2="${filename}${total_tests}_2.${extension}"
 
     # Выполняем команды
-    eval "$command1 > $BUILD$result_file1"
-    eval "$command2 > $BUILD$result_file2"
+    $command1 > "$BUILD$result_file1"
+    $command2 > "$BUILD$result_file2"
 
     # Сравниваем результаты
     if diff "$BUILD$result_file1" "$BUILD$result_file2" > /dev/null; then
